@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stacja benzynowa</title>
+    <style>
+        body{
+            background-color: lightgray;
+        }
+        #formularz{
+            background-color: azure;
+            color: darkslategrey;
+            padding: 10px;
+            border: 1px solid black;
+            width: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -200px;
+            margin-left: -200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="formularz">
+        <b>Ceny:</b>
+        <p id="ceny"> </p>
+
+        <input type="radio" id="benzyna" name="s" value="benzyna" checked>
+        <label for="benzyna">Benzyna</label>
+        <input type="radio" id="ropa" name="s" value="ropa">
+        <label for="ropa">Ropa</label><br>
+        <br>
+        <label for="cenaRopy">Cena ropy </label>
+        <input type="number" id="cenaRopy" name="cenaRopy"  value = 7.5><br>  
+        <br>
+        <label for="cenaBenzyny">Cena benzyny </label>
+        <input type="number" id="cenaBenzyny" name="cenaBenzyny"  value = 6.9><br>  
+        <br>
+        <label for="litry">Litry Paliwa </label>
+        <input type="number" id="litry" name="litry"  value = 0><br>  
+        <br>
+        <label for="zakup">Cena zakupu</label>
+        <input type="number" id="zakup" name="zakup" value = 0 readonly><br>
+        <br>
+        <button id="przelicz" onclick="przelicz()"> Przelicz </button>
+    </div>
+    
+    <script>
+
+        var ropa = 7.50
+        var benzyna = 6.90
+        
+        if(localStorage.getItem("benzyna")){
+            benzyna = localStorage.getItem("benzyna")
+        }
+        if(localStorage.getItem("ropa")){
+            ropa = localStorage.getItem("ropa")
+        }
+        document.getElementById("cenaRopy").value = ropa
+        document.getElementById("cenaBenzyny").value = benzyna
+        document.getElementById("ceny").innerHTML = "Ropa - " + ropa +" Benzyna - " + benzyna
+
+        function przelicz() {
+            ropa = document.getElementById("cenaRopy").value
+            benzyna =  document.getElementById("cenaBenzyny").value
+            localStorage.setItem('benzyna', benzyna);
+            localStorage.setItem('ropa', ropa);
+            document.getElementById("ceny").innerHTML = "Ropa - " + ropa +" Benzyna - " + benzyna
+            var cena = ropa
+            if(document.getElementById('benzyna').checked) {
+                cena = benzyna
+            }
+            var litry = document.getElementById("litry").value
+            document.getElementById("zakup").value = Math.round(( litry * cena) * 100) / 100
+          
+
+        }
+
+        
+    </script>
+</body>
+</html>
